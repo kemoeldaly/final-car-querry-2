@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarQuery Integration</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="http://www.carqueryapi.com/js/carquery.0.3.4.js"></script>
+  <script src="https://kit.fontawesome.com/15a704db36.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body class="bg-sky-100 dark:bg-slate-900 shadow w-full">
+
+  <div class="bg-black text-white rounded-md " >
+    <button onclick="toggleDarkMode()"
+    class="py-2 px-2 bg-black text-white rounded-md dark:bg-white dark:text-black transition-all duration-300 mr-2 mt-1">
+    <i id="modeButtonIcon" class="fas fa-regular fa-sun"></i>
+  </button>
+  
+  </div>
+  <div class="bg-sky-100 dark:bg-slate-950 rounded-lg p-8 ring-1 ring-slate-950">
+    <div class="flex items-center justify-between mb-2">
+     <div class="dark:bg-slate-950 rounded-lg p-8 ring-1 ring-gray-300/5 shadow-xl w-full">
+      <h1 class="flex justify-center text-3xl font-bold text-black dark:text-white mt-8 mb-4">vehicle specifications Search</h1>
+     </div>
+ 
+
+    </div>
+
+    <div class="dark:bg-slate-950 rounded-lg p-8 ring-1 ring-gray-300/5 shadow-xl w-full">
+     
+      <h1 class="flex justify-center text-3xl font-bold text-black dark:text-white mt-8 mb-4">Please Choose Vehicle Information</h1>
+      <div class="flex justify-center mb-4">
+        <select class="w-96 p-2 border border-gray-300 rounded" name="car-years" id="car-years"></select>
+      </div>
+      <div class="flex justify-center mb-4">
+        <select class="w-96 p-2 border border-gray-300 rounded" name="car-makes" id="car-makes"></select>
+      </div>
+      <div class="flex justify-center mb-4">
+        <select class="w-96 p-2 border border-gray-300 rounded" name="car-models" id="car-models"></select>
+      </div>
+      <div class="flex justify-center mb-4">
+        <select class="w-96 p-2 border border-gray-300 rounded" name="car-model-trims" id="car-model-trims"></select>
+      </div>
+      
+  
+
+
+      <div class="flex justify-center">
+        <button class="w-96 dark:bg-slate-900 dark:text-white bg-sky-200 text-black rounded cursor-pointer transition-all duration-300 text-md p-2 hover:bg-sky-300 hover:text-gray-800"
+        id="cq-show-data" type="button" value="Show Data">
+  show data
+      </div>
+
+</button>
+      
+     
+      <div id="car-model-data" class="text-black dark:text-white mb-8 p-8 max-w-2xl mx-auto"></div>
+    </div>
+  </div>
+
+
+  
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // Create a variable for the CarQuery object
+                var carquery = new CarQuery();
+    
+                // Run the carquery init function to get things started
+                carquery.init();
+    
+                // Optional: Customize as needed
+                carquery.setFilters({ sold_in_us: true });
+    
+                // Optional: Initialize year, make, model, trim dropdowns
+                carquery.initYearMakeModelTrim('car-years', 'car-makes', 'car-models', 'car-model-trims');
+    
+                // Optional: Set the onclick event for a button to show car data
+                $('#cq-show-data').click(function () {
+                    carquery.populateCarData('car-model-data');
+                });
+    
+                // Optional: Initialize search interface elements
+                var searchArgs = {
+                    // Customize the search interface elements as needed
+                    body_id: "cq-body",
+                    default_search_text: "Keyword Search",
+                    // ... other options
+                };
+                carquery.initSearchInterface(searchArgs);
+    
+                // If creating a search interface, set onclick event for the search button
+                $('#cq-search-btn').click(function () {
+                    carquery.search();
+                });
+            });
+
+            function toggleDarkMode() {
+  const htmlElement = document.documentElement;
+  const isDarkModeEnabled = htmlElement.classList.toggle('dark');
+
+  // Save user preference in localStorage
+  localStorage.setItem('darkMode', isDarkModeEnabled);
+
+  // Update button content based on the current mode
+  const modeButtonIcon = document.getElementById('modeButtonIcon');
+  if (isDarkModeEnabled) {
+    modeButtonIcon.className = 'fas fa-solid fa-moon'; // Change to the moon icon when in dark mode
+  } else {
+    modeButtonIcon.className = 'fas fa-regular fa-sun'; // Change to the sun icon when in light mode
+  }
+}
+
+// Check user preference in localStorage and apply dark mode if necessary
+const savedDarkMode = localStorage.getItem('darkMode');
+if (savedDarkMode === 'true') {
+  document.documentElement.classList.add('dark');
+}
+
+// Set initial button content based on the current mode
+const initialModeButtonIcon = document.getElementById('modeButtonIcon');
+if (document.documentElement.classList.contains('dark')) {
+  initialModeButtonIcon.className = 'fas fa-solid fa-moon';
+} else {
+  initialModeButtonIcon.className = 'fas fa-regular fa-sun';
+}
+
+
+
+        </script>
+         <div id="root"></div>
+         <script type="module" src="/src/main.jsx"></script>
+
+         <footer class="flex justify-center text-xl dark:text-white dark:bg-slate-950 rounded-lg p-8 ring-1 ring-gray-300/5 shadow-xl w-full">
+          &copy; 2024 CarQuery Integration. All rights reserved. Recalls Data provided by <span class="px-1">NHTSA API</span>.
+        </footer>
+        
+        
+        
+    </body>
+    </html>
+    
