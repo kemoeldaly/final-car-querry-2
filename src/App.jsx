@@ -24,12 +24,12 @@ function App() {
     }
   };
 
-  // Function to handle search
+  
   const handleSearch = async (modelYear, make, model) => {
     try {
-      // Check if all parameters are defined
+     
       if (modelYear && make && model) {
-        // Step 1: Get recalls for the required combination of Model Year, Make, and Model
+     
         const recalls = await getRecallsByVehicle(modelYear, make, model);
 
         // Set search results state

@@ -7,7 +7,7 @@ function Landing({ onSearch, searchResults }) {
   const [model, setModel] = useState('');
 
   const handleSearchClick = () => {
-    // Invoke the onSearch function with the provided parameters
+   
     onSearch(modelYear, make, model);
   };
 
